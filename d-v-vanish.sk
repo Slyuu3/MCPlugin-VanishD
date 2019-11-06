@@ -1,0 +1,31 @@
+#====[script by yay X]====[script: script for vanish]====[skrypt: skrypt na vanish]====
+command /v [<text>]:
+	permission: vanish.use
+	permission message: &4! &cNie masz uprawnien do tej komendy!
+	aliases: vanish
+	trigger:
+		if {v::%player%} is not set:
+			set {v::%player%} to true
+			send "&c>> &9Od teraz jestes na &fvanishu"
+			loop all players:
+				if loop-player don't have permission "vanish.widze":
+					add loop-player to {_g::*}
+			hide player from {_g::*}
+			stop
+		if {v::%player%} is set:
+			clear {v::%player%}
+			reveal player to all players
+			stop
+
+on pickup:
+	if {v::%player%} is set:
+		cancel event
+		
+on damage:
+	if {v::%attacker%} is set:
+		send "&c>> &4! Nie mozesz bic graczy gdy jestes na &fvanishu!"
+		cancel event
+		
+on quit:
+	if {v::%player%} is set:
+		clear {v::%player%}
